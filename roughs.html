@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analog Clock</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <style>
+        body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f4f4f4;
+}
+
+.clock {
+    width: 200px;
+    height: 200px;
+    border: 10px solid black;
+    border-radius: 50%;
+    position: relative;
+    background: white;
+}
+
+.hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    background: black;
+    transform-origin: bottom;
+    transform: translateX(-50%) rotate(0deg);
+    transition-timing-function: steps(1, end);
+}
+
+.hour {
+    width: 6px;
+    height: 50px;
+    background: black;
+}
+
+.minute {
+    width: 4px;
+    height: 70px;
+    background: black;
+}
+
+.second {
+    width: 2px;
+    height: 80px;
+    background: red;
+}
+
+.center {
+    width: 10px;
+    height: 10px;
+    background: black;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+    </style>
+    <div class="clock">
+        <div class="hand hour" id="hour-hand"></div>
+        <div class="hand minute" id="minute-hand"></div>
+        <div class="hand second" id="second-hand"></div>
+        <div class="center"></div>
+    </div>
+    <script src="script.js"></script>
+
+<script>
+    function updateClock() {
+    const now = new Date();
+    const hours = now.getHours() % 12;
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+
+    const hourDeg = (hours * 30) + (minutes * 0.5);
+    const minuteDeg = minutes * 6;
+    const secondDeg = seconds * 6;
+
+    document.getElementById("hour-hand").style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+    document.getElementById("minute-hand").style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+    document.getElementById("second-hand").style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+</script>
+</body>
+</html>

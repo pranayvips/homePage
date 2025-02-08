@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle with Elements</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="circle">
+        <div class="element">1</div>
+        <div class="element">2</div>
+        <div class="element">3</div>
+        <div class="element">4</div>
+        <div class="element">5</div>
+        <div class="element">6</div>
+    </div>
+    <style>
+        body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.circle {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 2px solid #000000;
+}
+
+.element {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: #ff0000;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.circle .element:nth-child(1) {
+    top: 50%;
+    left: 100%;
+    transform: translate(-50%, -50%);
+}
+
+.circle .element:nth-child(2) {
+    top: 15%;
+    left: 85%;
+    transform: translate(-50%, -50%);
+}
+
+.circle .element:nth-child(3) {
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.circle .element:nth-child(4) {
+    top: 15%;
+    left: 15%;
+    transform: translate(-50%, -50%);
+}
+
+.circle .element:nth-child(5) {
+    top: 50%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+}
+
+.circle .element:nth-child(6) {
+    top: 85%;
+    left: 15%;
+    transform: translate(-50%, -50%);
+}
+
+    </style>
+</body>
+</html>

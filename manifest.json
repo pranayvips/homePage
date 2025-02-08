@@ -1,0 +1,13 @@
+{
+    "name": "Pranay's Homepage",
+    "version": "48.63",
+    "description": "Welcome to our home page which makes life easy",
+    "manifest_version": 3,
+    "chrome_url_overrides": {
+        "newtab": "index.html"
+    },
+    "permissions": ["bookmarks"],
+    "background": {
+    "service_worker": "background.js"
+  }
+}

@@ -1,0 +1,1088 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  z-index: 10;
+}
+
+body {
+  overflow: hidden;
+  background-color: black;
+  position: relative;
+  height: 100vh;
+  user-select: none;
+  cursor: url("tool/cur.png"), auto;
+}
+
+:root{
+  --bg: #181625;
+  --colour: #fff;
+}
+/* This is for the background of the page */
+.bg {
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
+.bg img {
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Here is the NOTIFICATION icon on top left */
+.noti-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+.noti-button svg {
+  height: 1.2rem;
+  color: white;
+}
+@keyframes width-in {
+  from{width: 0%;}
+  to{width: 100%;}
+}
+@keyframes width-out {
+  from{width: 100%;}
+  to{width: 0%;}
+}
+/* WEATHER card animation starts here */
+.weather-card {
+  position: absolute;
+  top: 20px;
+  /* top: 20px;
+  right: 20px; */
+  right: 20px;
+  display: flex;
+  /* background-color: rgba(0,0,0,0.1); */
+  backdrop-filter: blur(30px);
+  /* backdrop-filter: none; */
+  border-radius: 12px;
+  padding: 10px 30px;
+  color: white;
+  column-gap: 3vw;
+  font-family: "Courier";
+  font-weight: bold;
+  transition: right 0.5s, top 0.4s, box-shadow 1s;
+  /* box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.4),
+    -5px -5px 10px rgba(0, 0, 0, 0.1); */
+}
+/* .weather-card:hover{
+  top: 48px;
+} */
+.weather-card .left1 div{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-evenly;
+}
+.weather-card .left {
+  display: flex;
+  align-items: center;
+  transition: all 0.5s;
+}
+.weather-card .left p:first-child {
+  font-size: 18px;
+  /* display: none; */
+}
+.weather-card .left p:nth-child(2) {
+  font-size: 35px;
+}
+.weather-card .left1 p:nth-child(2) {
+  font-size: 25px;
+}
+.weather-card .left p:nth-child(3) {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 9px;
+}
+
+.weather-card .left1 {
+  display: flex;
+  /* width: 12vw; */
+  /* backdrop-filter: blur(10px); */
+  border-radius: 12px;
+  border: 2px solid white;
+  height: 10vh;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 12px;
+  column-gap: 15px;
+  padding: 15px 15px;
+}
+.weather-card .left1 #icon {
+  height: 64px;
+}
+.weather-card .left #icon {
+  height: 15vh;
+}
+#icon {
+  margin-left: 10px;
+}
+
+.weather-card .right {
+  overflow: hidden;
+  font-weight: 100;
+  display: none;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.1);
+  font-size: 13px;
+  line-height: 1.35;
+  padding: 10px 5px;
+  border-radius: 12px;
+}
+
+.weather-card .right p {
+  margin: 0 5px;
+  padding: 0 5px;
+  transition: all 0.2s;
+  border-radius: 4px;
+}
+.weather-card .right p:hover {
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.mid-container {
+  position: absolute;
+  top: 32vh;
+  width: 100vw;
+}
+.time {
+  display: inline-block;
+  margin-left: 50vw;
+  transform: translate(-50%);
+}
+.time p {
+  display: none;
+  position: relative;
+  text-align: center;
+  color: var(--colour);
+  transition: color .5s;
+  font-weight: bold;
+  font-family: "Courier";
+  font-size: 8rem;
+  text-shadow: 3px 3px 20px black;
+}
+.time .option:hover{
+  opacity: 1;
+}
+.time .option{
+  padding: 20px;
+  opacity: 0;
+  top: 0;
+  transition: opacity .8s;
+  position: absolute;
+  right: -100px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-evenly;
+  row-gap: 20px;
+}
+.time .option svg:hover{
+  transform: scale(1.2);
+}
+.time .option svg{
+  height: 22px;
+  width: 22px;
+  transition: transform .3s;
+  color: var(--colour);
+}
+.time #clock{
+  display: none;
+  cursor: none;
+  overflow: hidden;
+  /* background-color: var(--bg); */
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  border-radius: 50%;
+  position: relative;
+  margin-bottom: 35px;
+  transition: background-color .5s;
+}
+.time #clock .digit {
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  transform: translate(85px,85px);
+  height: 100%;
+
+}
+
+.time #clock .digit .number {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 100;
+  font-family: "Ubuntu",'Times New Roman', Times, serif;
+  font-size: 17px;
+  font-weight: bold;
+  transition: color .5s;
+
+  color: var(--colour);
+  transform: rotate(calc(var(--i) * 30deg)) translateY(80px) translateX(0px) rotate(calc(var(--i) * -30deg));
+}
+.time #clock .digit .sm{
+  font-size: 10px;
+  color: rgb(107, 106, 106);
+}
+.time #clock .tick{
+  width: 200px;
+  height: 200px;
+  /* border: 3px solid var(--colour); */
+
+  border-radius: 50%;
+  position: relative;
+  /* background-color: var(--bg); */
+  background-color: transparent;
+  transition: background-color .5s , border .5s;
+
+}
+.time #clock .tick .hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  background: black;
+  transform-origin: bottom;
+  transform: translateX(-50%) rotate(0deg);
+  transition-timing-function: steps(1, end);
+}
+.time #clock .tick .minute{
+  width: 4px;
+    height: 70px;
+    background-color: var(--colour);
+  transition: background-color .5s;
+    border-radius: 4px;
+}
+.time #clock .tick .hour{
+  width: 6px;
+    height: 50px;
+    border-radius: 4px;
+  transition: background-color .5s;
+    background-color: var(--colour);
+}
+.time #clock .tick .second{
+  width: 2px;
+  border-radius: 4px;
+  height: 80px;
+  transition: all 1s linear;
+  background: red;
+}
+.time #clock .tick .center {
+  width: 10px;
+  height: 10px;
+  /* background: var(--bg); */
+  background-color: white;
+  /* background-color: white; */
+  border: 3px solid darkred;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.wish {
+  color: white;
+  margin-top: 2vh;
+  display: flex;
+  align-items: center;
+  column-gap: 1vw;
+  justify-content: center;
+}
+@keyframes morning {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes evening {
+  0% {
+    margin-left: 0;
+  }
+  25% {
+    margin-left: -10px;
+  }
+  50% {
+    margin-left: 0;
+  }
+
+  75% {
+    margin-left: 10px;
+  }
+  100% {
+    margin-left: 0%;
+  }
+}
+@keyframes night {
+  0%{
+    color: black;
+  }
+  60%{
+    color: white;
+  }
+  100%{color: black;}
+}
+.wish div{
+  width: calc(2rem + 10px);
+}
+.wish svg {
+  width: 2rem;
+  animation: morning 20s linear infinite;
+}
+.wish p {
+  font-family: "Courier";
+  font-size: 1.35rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 20px black;
+}
+
+.input-container {
+  cursor: url("tool/text.png"), auto;
+  margin-top: 8.5vh;
+  margin-left: 30%;
+  display: flex;
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.05);
+  /* border: 1px solid rgba(255, 255, 255, 0.055); */
+  border-radius: 8px;
+  width: 40%;
+  height: 3.5rem;
+  transition: all 300ms;
+  padding: 5px 20px;
+  border: 2px solid transparent;
+}
+
+.input-container:hover {
+  box-shadow: 5px 5px 5px rgba(0,0,0, 0.4),
+    -5px -5px 10px rgba(0,0,0, 0.4);
+    /* border: 1px solid rgba(30, 143, 255,0.5); */
+}
+.input-container input {
+  cursor: url("tool/text.png"), auto;
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+.input-container input:focus {
+  outline: none;
+}
+.input-container input::placeholder {
+  color: rgba(211, 211, 211, 0.622);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+}
+
+#search-bar:focus + #search-button {
+  opacity: 1;
+}
+.input-container svg:hover {
+  opacity: 1;
+}
+.input-container svg {
+  cursor: url("tool/hand.png"), auto;
+  opacity: 0;
+  padding: 6px;
+  transition: all 0.5s;
+}
+
+#search-button:hover + #option {
+  display: block;
+  opacity: 1;
+}
+#option:hover {
+  display: block;
+  opacity: 1;
+}
+.mid-container #option {
+  opacity: 0;
+  display: none;
+  position: absolute;
+  right: 0;
+  /* width: 105px; */
+  transform: translate(15%, -30%);
+  height: 105px;
+  border-radius: 50%;
+  display: flex;
+  bottom: -145px;
+  column-gap: 10px;
+}
+
+.mid-container #option svg {
+  color: white;
+  height: 30px;
+
+  stroke-width: 2px;
+  border-radius: 50%;
+}
+.mid-container #option svg:hover {
+  transform: scale(1.2);
+}
+
+.bottom-bar {
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 1vh 1vw;
+  align-items: center;
+  cursor: url("tool/hand.png"), auto;
+  height: 50px;
+}
+.bottom-bar div:has(svg) {
+  position: relative;
+}
+
+.bottom-bar div svg {
+  transition: left 1s, right 1s;
+  height: 4vh;
+  position: absolute;
+  z-index: 10;
+}
+.bottom-bar div:first-child svg {
+  top: -10px;
+  left: 0;
+}
+.bottom-bar div svg {
+  top: -10px;
+  /* left: -30px; */
+  left: 15px;
+}
+.bottom-bar p {
+  color: rgb(184, 181, 181);
+  font-weight: bold;
+  font-size: 1rem;
+  font-family: "Courier";
+  /* text-shadow: 2px 2px 2px black; */
+  cursor: url("tool/hand.png"), auto;
+  transition: all 1s;
+  letter-spacing: 2px;
+  position: relative;
+}
+.bottom-bar p:hover {
+  color: white;
+  transform: scale(1.05);
+}
+@keyframes quote-width {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+.bottom-bar p:hover::before {
+  display: block;
+}
+.bottom-bar p::before {
+  display: none;
+  animation: quote-width 0.4s linear;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  content: "";
+  border-bottom: 1px solid white;
+  box-shadow: 0 0 12px 1px rgba(255, 255, 255, 0.5);
+}
+/* .bottom-bar .quote-container{
+    padding: 7px 20px;
+    border-radius: 8px;
+    backdrop-filter: blur(30px);
+} */
+
+.todos {
+  position: absolute;
+  /* bottom: 30px; */
+  bottom: -50vh;
+  right: 50px;
+  /* background-color: bisque; */
+  backdrop-filter: blur(10px);
+  width: 20vw;
+  padding: 5px 15px;
+  border-radius: 8px;
+  min-height: 100px;
+  color: white;
+  transition: bottom 1s;
+  padding-bottom: 10px;
+  max-height: 50vh;
+  box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.4);
+}
+.todos .top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+.todos .top svg {
+  width: 20px;
+}
+.todos .top div {
+  display: flex;
+  column-gap: 15px;
+}
+.todos .top div svg:first-child:hover {
+  color: green;
+}
+.todos .top div svg:last-child:hover {
+  color: red;
+}
+.todos .content {
+  /* padding-right: 10px; */
+}
+.todos .content .data {
+  font-family: "Courier";
+  display: flex;
+  column-gap: 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  margin-top: 20px;
+  padding: 4px 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  align-items: center;
+}
+.todos .content .data input {
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 2px;
+  border: 2px solid white;
+}
+.todos .content .data input:hover {
+  transform: scale(1.12);
+  transition: 0.4s;
+}
+.todos .content .data input:checked {
+  background-color: red;
+  border-color: red;
+  transform: rotate(30deg);
+  box-shadow: 0 0 12px 5px rgba(255, 0, 0, 0.3);
+}
+.todos .content .data p {
+  width: 100%;
+  font-weight: bold;
+}
+
+.todos .create {
+  margin-top: 20px;
+  /* display: flex; */
+  display: none;
+  justify-content: space-between;
+}
+.todos .create input::placeholder {
+  color: white;
+}
+.todos .create input {
+  outline: none;
+  display: block;
+  background-color: transparent;
+  border: none;
+  color: white;
+  border-bottom: 2px solid white;
+  width: 70%;
+}
+.todos .create button {
+  background-color: green;
+  border: none;
+  color: white;
+  /* cursor: url("tool/cur-hand.png"), auto; */
+  font-weight: bold;
+  padding: 5px 15px;
+}
+
+/* .todos .add{
+position: absolute;
+bottom: 10px;
+right: 10px;
+padding: 5px;border-radius: 50%;
+background-color: lightblue;
+height: 30px;
+width: 30px;
+}
+.todos .add svg{
+  width: 20px;
+} */
+
+/* The switch - the box around the slider */
+.setting .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.setting .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.setting .switch .slider {
+  position: absolute;
+  /* cursor: url("tool/cur-hand.png"), auto; */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.setting .switch .slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.setting .switch input:checked + .slider {
+  background-color: #4cd865;
+}
+
+.setting .switch input:focus + .slider {
+  box-shadow: 0 0 1px #4cd865;
+}
+
+.setting .switch input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.setting .switch .slider.round {
+  border-radius: 34px;
+}
+
+.setting .switch .slider.round:before {
+  border-radius: 50%;
+}
+
+.setting .tab {
+  display: flex;
+  border-bottom: 2px solid white;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.setting .tab p {
+  padding: 12px 15px;
+  font-family: "Courier";
+  font-weight: bold;
+  text-align: center;
+  /* width: 80px; */
+}
+.setting .tab .selected {
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+.setting .tab .selected:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.setting .personalise,
+.setting .customise,
+.setting .sync {
+  display: none;
+  animation: fade-out 0.8s linear;
+}
+.setting {
+  color: white;
+  backdrop-filter: blur(20px);
+  position: absolute;
+  width: 30vw;
+  /* left: 10px;
+  bottom: 10px; */
+  left: -510px;
+  bottom: -300px;
+  min-width: 300px;
+  box-shadow: 0 0 24px 12px black;
+  padding: 10px 20px;
+  border-radius: 4px;
+  transition: all 0.5s;
+  /* height: 30vh; */
+  height: 258px;
+  /* overflow: hidden; */
+}
+
+#setting-icon {
+  margin-left: -60px;
+  transition: margin-left 0.45s;
+}
+
+.setting .general {
+  padding: 15px 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  animation: fade-out 0.8s linear;
+  overflow-y: auto;
+}
+.setting .general div {
+  display: flex;
+  justify-content: space-between;
+}
+.setting .general div p {
+  font-weight: bold;
+  font-family: "Courier";
+  font-size: 18px;
+}
+.setting .personalise,
+.setting .customise,
+.setting .sync {
+  flex-direction: column;
+  row-gap: 10px;
+}
+.setting .customise {
+  height: 175px;
+  overflow-y: scroll;
+  padding-right: 10px;
+}
+/* width */
+.setting .customise::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.setting .customise::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+.setting .customise::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: #ced4da;
+}
+
+/* Handle on hover */
+.setting .customise::-webkit-scrollbar-thumb:hover {
+  background: #adb5bd;
+}
+.setting .customise div {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-family: "Courier";
+  font-size: 18px;
+}
+
+.setting .personalise div {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-family: "Courier";
+  font-size: 18px;
+}
+.setting .personalise span {
+  width: 26px;
+  height: 26px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+.setting .personalise button {
+  padding: 6px 20px;
+  align-self: end;
+  margin-top: 5px;
+  background-color: #4dabf7;
+  font-weight: bold;
+  letter-spacing: 1px;
+  outline: none;
+  border: none;
+  border-radius: 2px;
+  transition: all 0.4s;
+  /* cursor: url("tool/cur-hand.png"), auto; */
+}
+.setting .personalise button:hover {
+  transform: scale(0.95);
+}
+.setting .personalise input {
+  outline: none;
+  cursor: url("tool/cur.png"), auto;
+  border: none;
+  margin-left: -3px;
+  margin-top: -5px;
+  width: 35px;
+  height: 36px;
+}
+.setting .sync div:first-child {
+  display: flex;
+  justify-content: space-between;
+}
+.setting .sync p {
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-family: "Courier";
+  font-size: 18px;
+}
+.setting .sync p:last-child {
+  font-size: 10px;
+  margin-top: 20px;
+}
+.setting .sync div:last-child input {
+  width: 100%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  padding: 10px 15px;
+  text-align: center;
+  backdrop-filter: drop-shadow(10px 10px 10px white);
+  color: white;
+  appearance: none;
+}
+.setting .sync .sync-on {
+  display: none;
+}
+.setting .sync .sync-on div svg:hover {
+  transform: scale(0.9);
+  background-color: green;
+}
+.setting .sync .sync-on div svg {
+  transition: all 0.3s;
+  height: 30px;
+  border-radius: 4px;
+}
+.setting .sync .sync-on div {
+  display: flex;
+}
+
+.setting .cut {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+}
+@keyframes fade-out {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.setting .cut svg {
+  animation: fade-out 0.8s linear;
+  height: 30px;
+  width: 30px;
+}
+
+.notification {
+  position: absolute;
+  top: 100px;
+  /* left: 20px; */
+  left: -22vw;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 12px;
+  /* width: 250px; */
+  width: 20vw;
+  backdrop-filter: blur(30px);
+  display: flex;
+  transition: all 0.3s;
+  flex-direction: column;
+}
+.notification p {
+  margin-top: 10px;
+  font-family: "Courier";
+  font-size: 14px;
+  font-weight: bold;
+}
+.notification h1 {
+  font-family: "Courier";
+  font-size: 25px;
+  font-weight: bold;
+}
+.notification button {
+  font-family: "arial";
+  font-size: 17px;
+  padding: 5px 15px;
+  background-color: dodgerblue;
+  border: none;
+  border-radius: 2px;
+  /* cursor: url("tool/cur-hand.png"), auto; */
+  margin-top: 10px;
+  /* text-shadow: 2px 2px 2px black; */
+  color: white;
+  align-self: end;
+}
+
+
+.right-context{
+  position: absolute;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(20px);
+  font-family: "Courier";
+  /* display: flex; */
+  display: none;
+  flex-direction: column;
+  width: 15vw;
+  /* align-items: center; */
+  /* padding: 10px 15px; */
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 5px 10px;
+  box-shadow: rgba(211, 211, 211, 0.622);
+}
+.right-context hr{
+  width: 100%;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.273);
+}
+.right-context p:hover{
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.right-context p{
+  transition: all .2s;
+  padding: 10px 0;
+  font-size: 17px;
+  padding-left: 20px;border-radius: 8px;
+}
+.right-context p svg{
+  height: 20px;
+  margin-right: 10px;
+}
+
+
+.bookmark{
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  display: none;
+  height: 100vh;
+  animation: fade-out .4s linear;
+}
+
+.bookmark .books{
+  padding: 5vh 5vw;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  margin-left: 10vw;
+  margin-top: 10vh;
+  padding-top: 12vh;
+  position: absolute;
+  width: 80vw;
+  height: 80vh;
+  display: grid;row-gap: 10px;column-gap: 10px;
+  grid-template-columns: repeat(6,1fr);
+  
+  overflow-y: scroll;
+}
+.bookmark .books::-webkit-scrollbar{
+  width: 10px;
+}
+.bookmark .books::-webkit-scrollbar-track{
+  background-color: transparent;
+}
+.bookmark .books::-webkit-scrollbar-thumb{
+  background-color: blue;
+  width: 10px;
+}
+
+#book-back:hover{
+  transform: scale(1.1);
+}
+#book-back{
+  /* margin-right: calc(10vw + 50px); */
+  margin-top: 9vh;
+  height: 30px;
+  position: absolute;
+  left: 50vw;
+  top: 20px;
+  color: white;
+transition: all .5s;
+/* cursor: url("tool/cur-hand.png"),auto; */
+}
+#book-close:hover{
+  transform: scale(1.1);
+}
+#book-close{
+  margin-right: 10vw;
+  margin-top: 9vh;
+  height: 30px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  color: white;
+transition: all .5s;
+/* cursor: url("tool/cur-hand.png"),auto; */
+}
+
+.bookmark h1{
+  position: absolute;
+  margin-left: 12vw;
+  margin-top: 9vh;
+  font-family: "Courier";
+  top: 30px;
+  border-bottom: 2px solid white;
+  padding: 0 10px;
+  font-size: 25px;
+  letter-spacing: 2px;
+  /* left: 10vw; */
+  color: white;
+}
+.bookmark .books div{
+  /* cursor: url("tool/cur-hand.png"),auto; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.bookmark .books div p{
+  text-align: center;
+  font-family: "Courier";
+  font-weight: bold;
+color: white;
+
+}
+.bookmark .books .folder svg{
+  height: 5vh;
+  color: #FFCC42;
+  fill: #FFCC42;
+}
+.bookmark .books .link svg{
+  height: 5vh;
+  color: #fff;
+}
+
+
+
+@media (max-width:800px) {
+  .input-container{
+    width: 80%;
+    margin-left: 10%;
+  }
+  .notification{
+    left: -50vw;
+  }
+  #time{
+    font-size: 6rem;
+  }
+}
+
